@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fdzc.shop.dao.ProductMapper">
+
+    <sql id="Base_Column_List">
+        id, category_id, product_name, description, detail,
+        price, stock_count, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="Product">
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="stockCount != null">
+                stock_count,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId},
+            </if>
+            <if test="productName != null">
+                #{productName},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+            <if test="detail != null">
+                #{detail},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="stockCount != null">
+                #{stockCount},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="filter" parameterType="Product" resultType="Product">
+        select
+            <include refid="Base_Column_List"/>
+        from product
+        <where>
+            <if test="categoryId != null">
+                and category_id=#{categrotyId}
+            </if>
+            <if test="productName != null">
+                and product_name like CONCAT('%',#{productName},'%')
+            </if>
+            <if test="description != null">
+                and description like CONCAT('%',#{description},'%')
+            </if>
+            <if test="detail != null">
+                and detail like CONCAT('%',#{detail},'%')
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+
+    <select id="findById" parameterType="String" resultType="Product">
+        select
+            <include refid="Base_Column_List"/>
+        from product
+        where id=#{id}
+    </select>
+
+    <update id="update" parameterType="Product">
+        update product
+        <set>
+            <if test="categoryId != null">
+                category_id=#{categoryId},
+            </if>
+            <if test="productName != null">
+                product_name=#{productName},
+            </if>
+            <if test="description != null">
+                description=#{description},
+            </if>
+            <if test="detail != null">
+                detail=#{detail},
+            </if>
+            <if test="price != null">
+                price=#{price},
+            </if>
+            <if test="stockCount != null">
+                stock_count=#{stockCount},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+    </update>
+
+    <delete id="delete">
+        delete from product
+        where id=#{id}
+    </delete>
+</mapper>    
